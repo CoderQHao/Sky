@@ -19,6 +19,12 @@
 		2CBA9BCC2057EC8700A65DC6 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BCB2057EC8700A65DC6 /* WeatherData.swift */; };
 		2CBA9BCF2057ED7500A65DC6 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BCE2057ED7500A65DC6 /* WeatherDataManager.swift */; };
 		2CBA9BD12057F2A700A65DC6 /* WeatherDataManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BD02057F2A700A65DC6 /* WeatherDataManagerTest.swift */; };
+		2CBA9BD42057F4A900A65DC6 /* URLSessionProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BD32057F4A900A65DC6 /* URLSessionProtocal.swift */; };
+		2CBA9BD72057F5CA00A65DC6 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BD62057F5CA00A65DC6 /* URLSession.swift */; };
+		2CBA9BD92057F66300A65DC6 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BD82057F66300A65DC6 /* MockURLSession.swift */; };
+		2CBA9BDB2057F7AA00A65DC6 /* URLSessionDataTaskProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BDA2057F7AA00A65DC6 /* URLSessionDataTaskProtocal.swift */; };
+		2CBA9BDD2057F7DA00A65DC6 /* URLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BDC2057F7DA00A65DC6 /* URLSessionDataTask.swift */; };
+		2CBA9BDF2057F93900A65DC6 /* MockURLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9BDE2057F93900A65DC6 /* MockURLSessionDataTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +63,12 @@
 		2CBA9BCB2057EC8700A65DC6 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		2CBA9BCE2057ED7500A65DC6 /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		2CBA9BD02057F2A700A65DC6 /* WeatherDataManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManagerTest.swift; sourceTree = "<group>"; };
+		2CBA9BD32057F4A900A65DC6 /* URLSessionProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocal.swift; sourceTree = "<group>"; };
+		2CBA9BD62057F5CA00A65DC6 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		2CBA9BD82057F66300A65DC6 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		2CBA9BDA2057F7AA00A65DC6 /* URLSessionDataTaskProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskProtocal.swift; sourceTree = "<group>"; };
+		2CBA9BDC2057F7DA00A65DC6 /* URLSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataTask.swift; sourceTree = "<group>"; };
+		2CBA9BDE2057F93900A65DC6 /* MockURLSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSessionDataTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,10 +120,12 @@
 		2CBA9B8E2057D0A400A65DC6 /* Sky */ = {
 			isa = PBXGroup;
 			children = (
+				2CBA9BD52057F5BE00A65DC6 /* Extensions */,
+				2CBA9BD22057F47E00A65DC6 /* Protocols */,
+				2CBA9BC52057D9E200A65DC6 /* Configuration */,
+				2CBA9BBD2057D0AF00A65DC6 /* Delegates */,
 				2CBA9BCD2057ED6600A65DC6 /* Manager */,
 				2CBA9BC82057DBB800A65DC6 /* Models */,
-				2CBA9BC52057D9E200A65DC6 /* Configuration */,
-				2CBA9BBD2057D0AF00A65DC6 /* Delegate */,
 				2CBA9BBF2057D0CB00A65DC6 /* Resources */,
 				2CBA9BC02057D0E400A65DC6 /* Storyboards */,
 				2CBA9BC22057D10300A65DC6 /* SupportingFiles */,
@@ -125,6 +139,8 @@
 			children = (
 				2CBA9BA62057D0A400A65DC6 /* Info.plist */,
 				2CBA9BD02057F2A700A65DC6 /* WeatherDataManagerTest.swift */,
+				2CBA9BD82057F66300A65DC6 /* MockURLSession.swift */,
+				2CBA9BDE2057F93900A65DC6 /* MockURLSessionDataTask.swift */,
 			);
 			path = SkyTests;
 			sourceTree = "<group>";
@@ -138,12 +154,12 @@
 			path = SkyUITests;
 			sourceTree = "<group>";
 		};
-		2CBA9BBD2057D0AF00A65DC6 /* Delegate */ = {
+		2CBA9BBD2057D0AF00A65DC6 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
 				2CBA9B8F2057D0A400A65DC6 /* AppDelegate.swift */,
 			);
-			path = Delegate;
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		2CBA9BBF2057D0CB00A65DC6 /* Resources */ = {
@@ -202,6 +218,24 @@
 				2CBA9BCE2057ED7500A65DC6 /* WeatherDataManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		2CBA9BD22057F47E00A65DC6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2CBA9BD32057F4A900A65DC6 /* URLSessionProtocal.swift */,
+				2CBA9BDA2057F7AA00A65DC6 /* URLSessionDataTaskProtocal.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2CBA9BD52057F5BE00A65DC6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2CBA9BD62057F5CA00A65DC6 /* URLSession.swift */,
+				2CBA9BDC2057F7DA00A65DC6 /* URLSessionDataTask.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,8 +376,12 @@
 			files = (
 				2CBA9BCF2057ED7500A65DC6 /* WeatherDataManager.swift in Sources */,
 				2CBA9BC72057DA0B00A65DC6 /* Configuration.swift in Sources */,
+				2CBA9BDB2057F7AA00A65DC6 /* URLSessionDataTaskProtocal.swift in Sources */,
+				2CBA9BDD2057F7DA00A65DC6 /* URLSessionDataTask.swift in Sources */,
+				2CBA9BD72057F5CA00A65DC6 /* URLSession.swift in Sources */,
 				2CBA9BCC2057EC8700A65DC6 /* WeatherData.swift in Sources */,
 				2CBA9B922057D0A400A65DC6 /* ViewController.swift in Sources */,
+				2CBA9BD42057F4A900A65DC6 /* URLSessionProtocal.swift in Sources */,
 				2CBA9BCA2057DBD300A65DC6 /* Location.swift in Sources */,
 				2CBA9B902057D0A400A65DC6 /* AppDelegate.swift in Sources */,
 			);
@@ -353,6 +391,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CBA9BDF2057F93900A65DC6 /* MockURLSessionDataTask.swift in Sources */,
+				2CBA9BD92057F66300A65DC6 /* MockURLSession.swift in Sources */,
 				2CBA9BD12057F2A700A65DC6 /* WeatherDataManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
