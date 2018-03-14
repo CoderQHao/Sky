@@ -8,6 +8,47 @@
 
 import Foundation
 
+internal class DarkSkyURLSession: URLSessionProtocal {
+    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskHandler) -> URLSessionDataTaskProtocal {
+        return DarkSkyURLSessionDataTask(request: request, completion: completionHandler)
+    }
+}
+
+internal class DarkSkyURLSessionDataTask: URLSessionDataTaskProtocal {
+    private let request: URLRequest
+    private let completion: DataTaskHandler
+    
+    init(request: URLRequest, completion: @escaping DataTaskHandler) {
+        self.request = request
+        self.completion = completion
+    }
+    
+    func resume() {
+        let json = ProcessInfo.processInfo.environment["FakeJSON"]
+        if let json = json {
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)
+            
+            let data = json.data(using: .utf8)!
+            
+            completion(data, response, nil)
+        }
+    }
+}
+
+internal struct Config {
+    private static func isUITesting() -> Bool {
+        return ProcessInfo.processInfo.arguments.contains("UI-TESTING")
+    }
+    
+    static var urlSession: URLSessionProtocal = {
+        if isUITesting() {
+            return DarkSkyURLSession()
+        } else {
+            return URLSession.shared
+        }
+    }()
+}
+
 enum DataManagerError: Error {
     case failedRequest
     case invalidResponse
@@ -22,7 +63,7 @@ final class WeatherDataManager {
         self.urlSession = urlSession
     }
     
-    static let shared = WeatherDataManager(baseURL: API.authenticatedURL, urlSession: URLSession.shared)
+    static let shared = WeatherDataManager(baseURL: API.authenticatedURL, urlSession: Config.urlSession)
     
     typealias CompletionHandler = (WeatherData?, DataManagerError?) -> Void
     
