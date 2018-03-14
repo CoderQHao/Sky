@@ -31,56 +31,44 @@ class CurrentWeatherViewController: WeatherViewController {
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         delegate?.settingsButtonPressed(controlled: self)
     }
-
-    var now: WeatherData? {
-        didSet {
-            DispatchQueue.main.sync {
-                self.updateView()
-            }
-        }
-    }
     
-    var location: Location? {
+    var viewModel: CurrentWeatherViewModel? {
         didSet {
-            DispatchQueue.main.async {
-                self.updateView()
-            }
+            DispatchQueue.main.async { self.updateView() }
         }
     }
     
     func updateView() {
         activityIndicatorView.stopAnimating()
         
-        if let now = now, let location = location {
-            updateWeatherContainer(with: now, at: location)
+        if let vm = viewModel, vm.isUpdateReady {
+            updateWeatherContainer(with: vm)
         } else {
             loadingFailedLabel.isHidden = false
             loadingFailedLabel.text = "获取天气/位置失败了"
         }
     }
     
-    func updateWeatherContainer(with data: WeatherData, at loaction: Location) {
+    func updateWeatherContainer(with vm: CurrentWeatherViewModel) {
         weatherContainerView.isHidden = false
         
         // 位置
-        locationLabel.text = loaction.name
+        locationLabel.text = vm.city
         
         // 温度
-        temperatureLabel.text = String(format: "%.1f ℃", data.currently.temperature.toCelcius())
+        temperatureLabel.text = vm.temperature
         
         // 图标
-        weatherIcon.image = weatherIcon(of: data.currently.icon)
+        weatherIcon.image = vm.weatherIcon
         
         // 湿度
-        humidityLabel.text = String(format: "%.1f", data.currently.humidity)
+        humidityLabel.text = vm.humidity
         
         // 描述
-        summaryLabel.text = data.currently.summary
+        summaryLabel.text = vm.summary
         
         // 时间
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, dd MMMM"
-        dateLabel.text = formatter.string(from: data.currently.time)
+        dateLabel.text = vm.date
     }
     
     override func viewDidLoad() {

@@ -22,6 +22,7 @@ class RootViewController: UIViewController {
                 fatalError("目标控制器不存在")
             }
             destination.delegate = self
+            destination.viewModel = CurrentWeatherViewModel()
             currentWeatherViewController = destination
         default:
            break
@@ -49,7 +50,7 @@ class RootViewController: UIViewController {
             } else {
                 if let response = response {
                     // 通知当前天气控制器
-                    self.currentWeatherViewController.now = response
+                    self.currentWeatherViewController.viewModel?.weather = response
                 }
             }
         }
@@ -65,7 +66,7 @@ class RootViewController: UIViewController {
                 if let city = placemarks?.first?.locality {
                     // 读到了位置信息 通知当前天气控制器
                     let l = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-                    self.currentWeatherViewController.location = l
+                    self.currentWeatherViewController.viewModel?.location = l
                 }
             }
         }
