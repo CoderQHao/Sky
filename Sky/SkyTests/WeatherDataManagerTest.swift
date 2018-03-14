@@ -139,7 +139,6 @@ class WeatherDataManagerTest: XCTestCase {
                 humidity: 0.91))
         
         XCTAssertEqual(decoded, expected)
-        
     }
     
 }

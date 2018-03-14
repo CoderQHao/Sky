@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Root View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Sky" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="RootViewController" customModule="Sky" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,7 +28,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqd-S5-oed">
                                 <rect key="frame" x="0.0" y="20" width="375" height="254"/>
                                 <connections>
-                                    <segue destination="kj9-fP-373" kind="embed" id="58d-H2-XBC"/>
+                                    <segue destination="kj9-fP-373" kind="embed" identifier="SegueCurrentWeather" id="58d-H2-XBC"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -48,15 +48,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="121" y="210"/>
         </scene>
-        <!--View Controller-->
+        <!--Current Weather View Controller-->
         <scene sceneID="gll-0H-e0u">
             <objects>
-                <viewController id="kj9-fP-373" sceneMemberID="viewController">
+                <viewController id="kj9-fP-373" customClass="CurrentWeatherViewController" customModule="Sky" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t5d-uR-f1I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="254"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DTl-Ml-LQB">
+                                <rect key="frame" x="177" y="117" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="I32-bZ-jb3"/>
+                                    <constraint firstAttribute="width" constant="20" id="Ii3-5v-5x1"/>
+                                </constraints>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByQ-XJ-hVd">
+                                <rect key="frame" x="8" y="116" width="359" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dIn-oD-uoq">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="254"/>
                                 <subviews>
@@ -74,6 +88,9 @@
                                             <constraint firstAttribute="height" constant="44" id="qdH-f8-0kb"/>
                                         </constraints>
                                         <state key="normal" image="Setting"/>
+                                        <connections>
+                                            <action selector="settingsButtonPressed:" destination="kj9-fP-373" eventType="touchUpInside" id="ylV-bH-iqE"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVL-1G-cJB">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
@@ -82,6 +99,9 @@
                                             <constraint firstAttribute="width" constant="44" id="jT6-Qt-S9x"/>
                                         </constraints>
                                         <state key="normal" image="LocationBtn"/>
+                                        <connections>
+                                            <action selector="locationButtonPressed:" destination="kj9-fP-373" eventType="touchUpInside" id="Yzl-LQ-9a0"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shanghai" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lho-70-Q4X">
                                         <rect key="frame" x="60" y="14.5" width="255" height="31.5"/>
@@ -141,16 +161,33 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="DTl-Ml-LQB" firstAttribute="centerX" secondItem="t5d-uR-f1I" secondAttribute="centerX" id="2od-Nd-qnc"/>
                             <constraint firstItem="dIn-oD-uoq" firstAttribute="leading" secondItem="t5d-uR-f1I" secondAttribute="leading" id="CSN-J8-rd6"/>
+                            <constraint firstItem="ByQ-XJ-hVd" firstAttribute="leading" secondItem="Um8-nP-N4y" secondAttribute="leading" constant="8" id="CjN-S5-Sv2"/>
                             <constraint firstAttribute="bottom" secondItem="dIn-oD-uoq" secondAttribute="bottom" id="GT2-pL-sjZ"/>
+                            <constraint firstItem="DTl-Ml-LQB" firstAttribute="centerY" secondItem="t5d-uR-f1I" secondAttribute="centerY" id="Gbc-vb-v0K"/>
                             <constraint firstItem="dIn-oD-uoq" firstAttribute="top" secondItem="t5d-uR-f1I" secondAttribute="top" id="I8k-lb-bB6"/>
                             <constraint firstAttribute="trailing" secondItem="dIn-oD-uoq" secondAttribute="trailing" id="Lyi-nZ-QcY"/>
+                            <constraint firstItem="Um8-nP-N4y" firstAttribute="trailing" secondItem="ByQ-XJ-hVd" secondAttribute="trailing" constant="8" id="eA8-MT-FtO"/>
+                            <constraint firstItem="ByQ-XJ-hVd" firstAttribute="centerY" secondItem="t5d-uR-f1I" secondAttribute="centerY" id="rLm-cB-SZc"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Um8-nP-N4y"/>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="DTl-Ml-LQB" id="ZIr-uh-5N5"/>
+                        <outlet property="dateLabel" destination="6S5-YB-26B" id="DmN-Aj-adL"/>
+                        <outlet property="humidityLabel" destination="TP5-JF-oKk" id="39W-2N-fFt"/>
+                        <outlet property="loadingFailedLabel" destination="ByQ-XJ-hVd" id="Grw-2v-JHz"/>
+                        <outlet property="locationLabel" destination="Lho-70-Q4X" id="qTN-9a-9Le"/>
+                        <outlet property="summaryLabel" destination="Rmh-Ae-7fH" id="Izn-ew-4k8"/>
+                        <outlet property="temperatureLabel" destination="sud-go-vBi" id="SpE-dY-LjH"/>
+                        <outlet property="weatherContainerView" destination="dIn-oD-uoq" id="Ggb-iW-ikr"/>
+                        <outlet property="weatherIcon" destination="4fT-oR-X4N" id="1AB-H0-iot"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t7M-2Y-NWC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="916" y="-136"/>
+            <point key="canvasLocation" x="958" y="13"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="RZn-IM-sXT">
@@ -160,11 +197,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="381"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ZgS-in-i6i"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3k-ga-1Aj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="916" y="286"/>
+            <point key="canvasLocation" x="959" y="394"/>
         </scene>
     </scenes>
     <resources>
