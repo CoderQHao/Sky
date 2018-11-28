@@ -102,7 +102,7 @@ class RootViewController: UIViewController {
     }
     
     func setupActiveNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(notification:)), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 }
 
