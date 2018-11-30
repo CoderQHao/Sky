@@ -18,4 +18,11 @@ class WeekWeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var humidity: UILabel!
 
+    func configure(with vm: WeekWeatherDayRepresentable) {
+        week.text = vm.week
+        date.text = vm.date
+        humidity.text = vm.humidity
+        temperature.text = vm.temperature
+        weatherIcon.image = vm.weatherIcon
+    }
 }

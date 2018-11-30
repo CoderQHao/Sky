@@ -53,18 +53,13 @@ extension WeekWeatherViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WeekWeatherTableViewCell.reuseIdentifier, for: indexPath) as? WeekWeatherTableViewCell
-        guard let row = cell else {
-            fatalError("Unexpected table view cell.")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WeekWeatherTableViewCell.reuseIdentifier, for: indexPath) as? WeekWeatherTableViewCell else {
+            fatalError("Unexpected table view cell")
         }
         
-        if let vm = viewModel {
-            row.week.text = vm.week(for: indexPath.row)
-            row.date.text = vm.date(for: indexPath.row)
-            row.temperature.text = vm.temperature(for: indexPath.row)
-            row.weatherIcon.image = vm.weatherIcon(for: indexPath.row)
-            row.humidity.text = vm.humidity(for: indexPath.row)
+        if let weatherDay = viewModel?.viewModel(for: indexPath.row) {
+            cell.configure(with: weatherDay)
         }
-        return row
+        return cell
     }
 }
