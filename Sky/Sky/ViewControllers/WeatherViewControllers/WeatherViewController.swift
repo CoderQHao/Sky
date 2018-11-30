@@ -18,7 +18,7 @@ class WeatherViewController: UIViewController {
         weatherContainerView.isHidden = true
         loadingFailedLabel.isHidden = true
         
-        activityIndicatorView.stopAnimating()
+        activityIndicatorView.startAnimating()
         activityIndicatorView.hidesWhenStopped = true
     }
     

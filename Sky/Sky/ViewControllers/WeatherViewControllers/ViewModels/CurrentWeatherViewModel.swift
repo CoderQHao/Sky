@@ -53,7 +53,7 @@ struct CurrentWeatherViewModel {
     
     // 湿度
     var humidity: String {
-        return String(format: "%.1f", weather.currently.humidity)
+        return String(format: "%.1f", weather.currently.humidity * 100)
     }
     
     // 描述
