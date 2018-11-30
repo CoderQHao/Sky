@@ -35,6 +35,7 @@ class WeatherDataManagerTest: XCTestCase {
     }
     
     func test_weatherDataAt_gets_data() {
+        // 异步测试期望
         let expect = expectation(description: "Loading data from \(API.authenticatedURL)")
         var data: WeatherData? = nil
         
@@ -99,11 +100,7 @@ class WeatherDataManagerTest: XCTestCase {
     
     func test_weatherData_handle_response_decode() {
         let session = MockURLSession()
-        session.responseHeader = HTTPURLResponse(
-            url: URL(string: "https://darksky.net")!,
-            statusCode: 200,
-            httpVersion: nil,
-            headerFields: nil)
+        session.responseHeader = HTTPURLResponse(url: URL(string: "https://darksky.net")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         let data = """
         {

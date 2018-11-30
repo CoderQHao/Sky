@@ -8,9 +8,9 @@
 
 import Foundation
 
-typealias DataTaskHandler = (Data?, URLResponse?, Error?) -> Void
+typealias dataTaskHandler = (Data?, URLResponse?, Error?) -> Void
 
 protocol URLSessionProtocal {
     
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskHandler) -> URLSessionDataTaskProtocal
+    func dataTask(with request: URLRequest, completionHandler: @escaping dataTaskHandler) -> URLSessionDataTaskProtocal
 }

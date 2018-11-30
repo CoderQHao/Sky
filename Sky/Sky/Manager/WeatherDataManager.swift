@@ -9,16 +9,16 @@
 import Foundation
 
 internal class DarkSkyURLSession: URLSessionProtocal {
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskHandler) -> URLSessionDataTaskProtocal {
+    func dataTask(with request: URLRequest, completionHandler: @escaping dataTaskHandler) -> URLSessionDataTaskProtocal {
         return DarkSkyURLSessionDataTask(request: request, completion: completionHandler)
     }
 }
 
 internal class DarkSkyURLSessionDataTask: URLSessionDataTaskProtocal {
     private let request: URLRequest
-    private let completion: DataTaskHandler
+    private let completion: dataTaskHandler
     
-    init(request: URLRequest, completion: @escaping DataTaskHandler) {
+    init(request: URLRequest, completion: @escaping dataTaskHandler) {
         self.request = request
         self.completion = completion
     }

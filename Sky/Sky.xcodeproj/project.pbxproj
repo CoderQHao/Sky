@@ -130,16 +130,16 @@
 		2CBA9B8E2057D0A400A65DC6 /* Sky */ = {
 			isa = PBXGroup;
 			children = (
-				2CBA9BD52057F5BE00A65DC6 /* Extensions */,
+				2CBA9BCD2057ED6600A65DC6 /* Manager */,
 				2CBA9BD22057F47E00A65DC6 /* Protocols */,
+				2CBA9BC82057DBB800A65DC6 /* Models */,
+				2CBA9BC12057D0F800A65DC6 /* ViewControllers */,
+				2CBA9BD52057F5BE00A65DC6 /* Extensions */,
 				2CBA9BC52057D9E200A65DC6 /* Configuration */,
 				2CBA9BBD2057D0AF00A65DC6 /* Delegates */,
-				2CBA9BCD2057ED6600A65DC6 /* Manager */,
-				2CBA9BC82057DBB800A65DC6 /* Models */,
 				2CBA9BBF2057D0CB00A65DC6 /* Resources */,
 				2CBA9BC02057D0E400A65DC6 /* Storyboards */,
 				2CBA9BC22057D10300A65DC6 /* SupportingFiles */,
-				2CBA9BC12057D0F800A65DC6 /* ViewControllers */,
 			);
 			path = Sky;
 			sourceTree = "<group>";
