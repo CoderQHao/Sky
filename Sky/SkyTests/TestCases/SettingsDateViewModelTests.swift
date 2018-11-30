@@ -2,8 +2,8 @@
 //  SettingsDateViewModelTests.swift
 //  SkyTests
 //
-//  Created by Mars on 11/02/2018.
-//  Copyright © 2018 Mars. All rights reserved.
+//  Created by Qing ’s on 2018/11/30.
+//  Copyright © 2018 Qing's. All rights reserved.
 //
 
 import XCTest
