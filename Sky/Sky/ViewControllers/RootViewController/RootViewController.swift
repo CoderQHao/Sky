@@ -17,6 +17,9 @@ class RootViewController: UIViewController {
     private let segueWeekWeather = "SegueWeekWeather"
     private let segueSettings = "SegueSettings"
     
+    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else { return }
         switch identifier {
@@ -32,6 +35,16 @@ class RootViewController: UIViewController {
                 fatalError("目标控制器不存在")
             }
             weekWeatherViewController = destination
+        case segueSettings:
+            guard let navigationController = segue.destination as? UINavigationController else {
+                    fatalError("目标控制器不存在")
+            }
+            
+            guard let destination = navigationController.topViewController as? SettingsViewController else {
+                    fatalError("目标控制器不存在")
+            }
+            
+            destination.delegate = self
         default:
            break
         }
@@ -145,15 +158,29 @@ extension RootViewController: CLLocationManagerDelegate {
 
 extension RootViewController: CurrentWeatherViewControllerDelegate {
     func locationButtonPressed(controller: CurrentWeatherViewController) {
-        
+         print("Open locations.")
     }
     
     func settingsButtonPressed(controller: CurrentWeatherViewController) {
-        
+        print("Open Settings")
+        performSegue(withIdentifier: segueSettings, sender: self)
     }
 }
 
-
+extension RootViewController: SettingsViewControllerDelegate {
+    private func reloadUI() {
+        currentWeatherViewController.updateView()
+        weekWeatherViewController.updateView()
+    }
+    
+    func controllerDidChangeTimeMode(controller: SettingsViewController) {
+        reloadUI()
+    }
+    
+    func controllerDidChangeTemperatureMode(controller: SettingsViewController) {
+        reloadUI()
+    }
+}
 
 
 
