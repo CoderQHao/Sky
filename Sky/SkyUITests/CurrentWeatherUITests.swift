@@ -43,11 +43,6 @@ class CurrentWeatherUITests: XCTestCase {
     
     func test_location_button_exists() {
         let locationBtn = app.buttons["LocationBtn"]
-        let exists = NSPredicate(format: "exists == true")
-//
-        expectation(for: exists, evaluatedWith: locationBtn, handler: nil)
-        waitForExpectations(timeout: 5, handler: nil)
-        
         XCTAssert(locationBtn.exists)
      }
     
