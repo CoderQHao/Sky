@@ -10,7 +10,7 @@ import UIKit
 
 protocol CurrentWeatherViewControllerDelegate: class {
     func locationButtonPressed(controller: CurrentWeatherViewController)
-    func settingsButtonPressed(controlled: CurrentWeatherViewController)
+    func settingsButtonPressed(controller: CurrentWeatherViewController)
 }
 
 class CurrentWeatherViewController: WeatherViewController {
@@ -29,7 +29,7 @@ class CurrentWeatherViewController: WeatherViewController {
     }
     
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
-        delegate?.settingsButtonPressed(controlled: self)
+        delegate?.settingsButtonPressed(controller: self)
     }
     
     var viewModel: CurrentWeatherViewModel? {

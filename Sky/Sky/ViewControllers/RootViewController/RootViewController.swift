@@ -12,7 +12,10 @@ import CoreLocation
 class RootViewController: UIViewController {
     
     var currentWeatherViewController: CurrentWeatherViewController!
+    var weekWeatherViewController: WeekWeatherViewController!
     private let segueCurrentWeather = "SegueCurrentWeather"
+    private let segueWeekWeather = "SegueWeekWeather"
+    private let segueSettings = "SegueSettings"
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else { return }
@@ -24,11 +27,17 @@ class RootViewController: UIViewController {
             destination.delegate = self
             destination.viewModel = CurrentWeatherViewModel()
             currentWeatherViewController = destination
+        case segueWeekWeather:
+            guard let destination = segue.destination as? WeekWeatherViewController else {
+                fatalError("目标控制器不存在")
+            }
+            weekWeatherViewController = destination
         default:
            break
         }
     }
     
+    // 存储用户的位置
     private var currentLocation: CLLocation? {
         didSet {
             // 根据用户位置设置城市名称
@@ -38,6 +47,7 @@ class RootViewController: UIViewController {
         }
     }
     
+    /// 获取当地的天气数据
     private func fetchWeather() {
         guard let currentLocation = currentLocation else { return }
         
@@ -51,11 +61,13 @@ class RootViewController: UIViewController {
                 if let response = response {
                     // 通知当前天气控制器
                     self.currentWeatherViewController.viewModel?.weather = response
+                    self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: response.daily.data)
                 }
             }
         }
     }
     
+    /// 根据用户位置设置城市名称
     private func fetchCity() {
         guard let currentLocation = currentLocation else { return }
         
@@ -81,6 +93,7 @@ class RootViewController: UIViewController {
     
     private func requestLocation() {
         locationManager.delegate = self
+        // 获取到了用户授权
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             locationManager.requestLocation()
         } else {
@@ -94,13 +107,13 @@ class RootViewController: UIViewController {
         setupActiveNotification()
     }
     
+    // 接收到通知
     @objc func applicationDidBecomeAction(notification: Notification) {
         // 请求用户位置
         requestLocation()
-        
-        
     }
     
+    // App 进入活跃状态通知
     func setupActiveNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
@@ -108,20 +121,23 @@ class RootViewController: UIViewController {
 
 extension RootViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // 获取到了用户位置
         if let location = locations.first {
+            // 保存位置
             currentLocation = location
             manager.delegate = nil
-            
             manager.stopUpdatingLocation()
         }
     }
     
+    // 用户改变了授权
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             manager.requestLocation()
         }
     }
     
+    // 定位功能发生错误
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         dump(error)
     }
@@ -132,11 +148,9 @@ extension RootViewController: CurrentWeatherViewControllerDelegate {
         
     }
     
-    func settingsButtonPressed(controlled: CurrentWeatherViewController) {
+    func settingsButtonPressed(controller: CurrentWeatherViewController) {
         
     }
-    
-    
 }
 
 

@@ -9,7 +9,7 @@
 import XCTest
 
 class CurrentWeatherUITests: XCTestCase {
-    
+    // 正在执行的 App
     let app = XCUIApplication()
         
     override func setUp() {
@@ -32,6 +32,7 @@ class CurrentWeatherUITests: XCTestCase {
         }
         """
         app.launchEnvironment["FakeJSON"] = json
+        
         app.launch()
     }
     
@@ -42,10 +43,10 @@ class CurrentWeatherUITests: XCTestCase {
     
     func test_location_button_exists() {
         let locationBtn = app.buttons["LocationBtn"]
-//        let exists = NSPredicate(format: "exists == true")
+        let exists = NSPredicate(format: "exists == true")
 //
-//        expectation(for: exists, evaluatedWith: locationBtn, handler: nil)
-//        waitForExpectations(timeout: 5, handler: nil)
+        expectation(for: exists, evaluatedWith: locationBtn, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         XCTAssert(locationBtn.exists)
      }

@@ -9,8 +9,9 @@
 import UIKit
 
 struct CurrentWeatherViewModel {
-    
+    /// 位置信息是否加载完成
     var isLocationReady = false
+    /// 天气信息是否加载完成
     var isWeatherReady = false
     
     var isUpdateReady: Bool {
@@ -41,7 +42,13 @@ struct CurrentWeatherViewModel {
     
     // 温度
     var temperature: String {
-        return String(format: "%.1f ℃", weather.currently.temperature.toCelcius())
+        let value = weather.currently.temperature
+        switch UserDefaults.temperatureMode() {
+        case .fahrenheit:
+            return String(format: "%.1f °F", value)
+        case .celsius:
+            return String(format: "%.1f °C", value.toCelsius())
+        }
     }
     
     // 湿度
@@ -57,7 +64,8 @@ struct CurrentWeatherViewModel {
     // 时间
     var date: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "E, dd MMMM"
+        formatter.dateFormat = UserDefaults.dateMode().format
+        
         return formatter.string(from: weather.currently.time)
     }
     
