@@ -38,11 +38,11 @@ class RootViewController: UIViewController {
             weekWeatherViewController = destination
         case segueSettings:
             guard let navigationController = segue.destination as? UINavigationController else {
-                    fatalError("目标控制器不存在")
+                fatalError("目标控制器不存在")
             }
             
             guard let destination = navigationController.topViewController as? SettingsViewController else {
-                    fatalError("目标控制器不存在")
+                fatalError("目标控制器不存在")
             }
             
             destination.delegate = self
