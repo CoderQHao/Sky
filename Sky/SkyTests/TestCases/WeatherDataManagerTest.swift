@@ -11,9 +11,14 @@ import XCTest
 
 class WeatherDataManagerTest: XCTestCase {
     
+    let url = URL(string: "https://darksky.net")!
+    var session: MockURLSession!
+    var manager: WeatherDataManager!
+    
     override func setUp() {
         super.setUp()
-        
+        self.session = MockURLSession()
+        self.manager = WeatherDataManager(baseURL: url, urlSession: session)
     }
     
     override func tearDown() {
@@ -22,12 +27,9 @@ class WeatherDataManagerTest: XCTestCase {
     }
     
     func test_weatherDataAt_starts_the_session() {
-        let session = MockURLSession()
         let dataTask = MockURLSessionDataTask()
      
         session.sessionDataTask = dataTask
-        
-        let manager = WeatherDataManager(baseURL: URL(string: "https//darksky.net")!, urlSession: session)
         
         manager.weatherDataAt(latitude: 52, longitude: 100) { (_, _) in }
         
@@ -41,18 +43,16 @@ class WeatherDataManagerTest: XCTestCase {
         
         WeatherDataManager.shared.weatherDataAt(latitude: 52, longitude: 100) { (response, error) in
             data = response
+            // 满足期望
             expect.fulfill()
         }
-        
+        // 等待期望被满足
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertNotNil(data)
     }
     
     func test_weatherData_handle_invalid_request() {
-        let session = MockURLSession()
         session.responseError = NSError(domain: "Invalid Request", code: 100, userInfo: nil)
-        
-        let manager = WeatherDataManager(baseURL: URL(string: "https://darksky.net")!, urlSession: session)
         
         var error: DataManagerError? = nil
         manager.weatherDataAt(latitude: 52, longitude: 100) { (_, e) in
@@ -63,13 +63,10 @@ class WeatherDataManagerTest: XCTestCase {
     }
     
     func test_weatherData_handle_statuscode_not_equal_to_200() {
-        let session = MockURLSession()
-        session.responseHeader = HTTPURLResponse(url: URL(string: "https://darksky.net")!, statusCode: 400, httpVersion: nil, headerFields: nil)
+        session.responseHeader = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)
         
         let data = "{}".data(using: .utf8)!
         session.responseData = data
-        
-        let manager = WeatherDataManager(baseURL: URL(string: "https://darksky.net")!, urlSession: session)
         
         var error: DataManagerError? = nil
         
@@ -81,13 +78,10 @@ class WeatherDataManagerTest: XCTestCase {
     }
     
     func test_weatherDataAt_handle_invalid_response() {
-        let session = MockURLSession()
-        session.responseHeader = HTTPURLResponse(url: URL(string: "https://darksky.net")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        session.responseHeader = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         let data = "{".data(using: .utf8)!
         session.responseData = data
-        
-        let manager = WeatherDataManager(baseURL: URL(string: "https://darksky.net")!, urlSession: session)
         
         var error: DataManagerError? = nil
         
@@ -99,8 +93,7 @@ class WeatherDataManagerTest: XCTestCase {
     }
     
     func test_weatherData_handle_response_decode() {
-        let session = MockURLSession()
-        session.responseHeader = HTTPURLResponse(url: URL(string: "https://darksky.net")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        session.responseHeader = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         let data = """
         {
@@ -129,8 +122,6 @@ class WeatherDataManagerTest: XCTestCase {
         session.responseData = data
         
         var decoded: WeatherData? = nil
-        
-        let manager = WeatherDataManager(baseURL: URL(string: "https://darksky.net")!, urlSession: session)
         
         manager.weatherDataAt(latitude: 52, longitude: 100) { (d, _) in
             decoded = d

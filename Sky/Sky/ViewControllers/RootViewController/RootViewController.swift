@@ -48,11 +48,11 @@ class RootViewController: UIViewController {
             destination.delegate = self
         case segueLocations:
             guard let navigationController = segue.destination as? UINavigationController else {
-                fatalError("Invalid destination view controller!")
+                fatalError("目标控制器不存在")
             }
             
             guard let destination = navigationController.topViewController as? LocationsViewController else {
-                fatalError("Invalid destination view controller!")
+                fatalError("目标控制器不存在")
             }
             
             destination.delegate = self
