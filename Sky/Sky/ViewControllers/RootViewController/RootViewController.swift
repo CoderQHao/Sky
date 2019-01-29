@@ -84,7 +84,7 @@ class RootViewController: UIViewController {
                 dump(error)
             } else {
                 if let response = response {
-                    // 通知当前天气控制器
+                    // 通知 currentWeatherViewController
                     self.currentWeatherViewController.viewModel?.weather = response
                     self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: response.daily.data)
                 }
@@ -101,7 +101,7 @@ class RootViewController: UIViewController {
                 dump(error)
             } else {
                 if let city = placemarks?.first?.locality {
-                    // 读到了位置信息 通知当前天气控制器
+                    // 读到了位置信息 通知 currentWeatherViewController
                     let l = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
                     self.currentWeatherViewController.viewModel?.location = l
                 }
@@ -116,6 +116,7 @@ class RootViewController: UIViewController {
         return manager
     }()
     
+    /// 请求用户位置
     private func requestLocation() {
         locationManager.delegate = self
         // 获取到了用户授权
@@ -128,22 +129,23 @@ class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // App 进入活跃状态通知
         setupActiveNotification()
     }
     
     // 接收到通知
-    @objc func applicationDidBecomeAction(notification: Notification) {
+    @objc func applicationDidBecomeAction(_ notification: Notification) {
         // 请求用户位置
         requestLocation()
     }
     
-    // App 进入活跃状态通知
+    /// App 进入活跃状态通知
     func setupActiveNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 }
 
+// MARK: - CLLocationManagerDelegate
 extension RootViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // 获取到了用户位置
@@ -151,6 +153,7 @@ extension RootViewController: CLLocationManagerDelegate {
             // 保存位置
             currentLocation = location
             manager.delegate = nil
+            // 停止更新位置
             manager.stopUpdatingLocation()
         }
     }
@@ -168,6 +171,8 @@ extension RootViewController: CLLocationManagerDelegate {
     }
 }
 
+
+// MARK: - CurrentWeatherViewControllerDelegate
 extension RootViewController: CurrentWeatherViewControllerDelegate {
     func locationButtonPressed(controller: CurrentWeatherViewController) {
          performSegue(withIdentifier: segueLocations, sender: self)
@@ -178,6 +183,7 @@ extension RootViewController: CurrentWeatherViewControllerDelegate {
     }
 }
 
+// MARK: - SettingsViewControllerDelegate
 extension RootViewController: SettingsViewControllerDelegate {
     private func reloadUI() {
         currentWeatherViewController.updateView()

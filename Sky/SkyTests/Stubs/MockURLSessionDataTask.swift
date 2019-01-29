@@ -9,7 +9,7 @@
 import Foundation
 @testable import Sky
 
-class MockURLSessionDataTask: URLSessionDataTaskProtocal {
+class MockURLSessionDataTask: URLSessionDataTaskProtocol {
     private (set) var isResumeCalled = false
     
     func resume() {

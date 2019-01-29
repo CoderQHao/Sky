@@ -9,6 +9,7 @@
 import Foundation
 
 extension Double {
+    /// 华氏度 -> 摄氏度
     func toCelsius() -> Double {
         return (self - 32.0) / 1.8
     }

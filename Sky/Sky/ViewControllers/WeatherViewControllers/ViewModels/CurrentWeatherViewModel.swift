@@ -14,19 +14,20 @@ struct CurrentWeatherViewModel {
     /// 天气信息是否加载完成
     var isWeatherReady = false
     
+    /// 位置/天气信息是否加载完成
     var isUpdateReady: Bool {
         return isLocationReady && isWeatherReady
     }
     
     var location: Location! {
         didSet {
-            self.isLocationReady = location != nil
+            self.isLocationReady = (location != nil)
         }
     }
     
     var weather: WeatherData! {
         didSet {
-            self.isWeatherReady = weather != nil
+            self.isWeatherReady = (weather != nil)
         }
     }
     

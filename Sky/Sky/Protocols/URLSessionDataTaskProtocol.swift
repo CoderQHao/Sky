@@ -1,5 +1,6 @@
+
 //
-//  URLSessionDataTask.swift
+//  URLSessionDataTaskProtocol.swift
 //  Sky
 //
 //  Created by Qing’s on 2018/3/13.
@@ -8,4 +9,6 @@
 
 import Foundation
 
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}
+protocol URLSessionDataTaskProtocol {
+    func resume()
+}

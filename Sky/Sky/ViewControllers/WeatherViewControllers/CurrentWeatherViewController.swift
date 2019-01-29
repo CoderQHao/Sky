@@ -38,6 +38,7 @@ class CurrentWeatherViewController: WeatherViewController {
         }
     }
     
+    // 更新 UI
     func updateView() {
         activityIndicatorView.stopAnimating()
         
