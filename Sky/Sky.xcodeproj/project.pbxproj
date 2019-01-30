@@ -36,6 +36,7 @@
 		0705427921B128F4009BCE5A /* LocationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0705427321B128F3009BCE5A /* LocationRepresentable.swift */; };
 		0705427B21B12969009BCE5A /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0705427A21B12969009BCE5A /* CLLocation.swift */; };
 		070C47B52200554900DBD134 /* CurrentWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070C47B42200554900DBD134 /* CurrentWeatherUITests.swift */; };
+		070C47B7220186C900DBD134 /* AddLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070C47B6220186C900DBD134 /* AddLocationViewModel.swift */; };
 		2CBA9B902057D0A400A65DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9B8F2057D0A400A65DC6 /* AppDelegate.swift */; };
 		2CBA9B922057D0A400A65DC6 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9B912057D0A400A65DC6 /* RootViewController.swift */; };
 		2CBA9B972057D0A400A65DC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBA9B962057D0A400A65DC6 /* Assets.xcassets */; };
@@ -102,6 +103,7 @@
 		0705427321B128F3009BCE5A /* LocationRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationRepresentable.swift; sourceTree = "<group>"; };
 		0705427A21B12969009BCE5A /* CLLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		070C47B42200554900DBD134 /* CurrentWeatherUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeatherUITests.swift; sourceTree = "<group>"; };
+		070C47B6220186C900DBD134 /* AddLocationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewModel.swift; sourceTree = "<group>"; };
 		2CBA9B8C2057D0A400A65DC6 /* Sky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBA9B8F2057D0A400A65DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CBA9B912057D0A400A65DC6 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -250,8 +252,8 @@
 		0705426A21B128F3009BCE5A /* LocationsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				0705427121B128F3009BCE5A /* AddLocationViewController.swift */,
 				0705426E21B128F3009BCE5A /* LocationsViewController.swift */,
+				0705427121B128F3009BCE5A /* AddLocationViewController.swift */,
 				0705426B21B128F3009BCE5A /* ViewModels */,
 				0705426F21B128F3009BCE5A /* TableViewCells */,
 				0705427221B128F3009BCE5A /* Protocols */,
@@ -263,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				0705426C21B128F3009BCE5A /* LocationsViewModel.swift */,
+				070C47B6220186C900DBD134 /* AddLocationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				0705427821B128F4009BCE5A /* AddLocationViewController.swift in Sources */,
 				0705423821B10E4D009BCE5A /* WeekWeatherViewModel.swift in Sources */,
 				2CBA9BDD2057F7DA00A65DC6 /* URLSessionDataTask.swift in Sources */,
+				070C47B7220186C900DBD134 /* AddLocationViewModel.swift in Sources */,
 				0705427721B128F4009BCE5A /* LocationTableViewCell.swift in Sources */,
 				2CBA9BE72059042E00A65DC6 /* Double.swift in Sources */,
 				0705424821B11D8A009BCE5A /* ContentRepresentable.swift in Sources */,
