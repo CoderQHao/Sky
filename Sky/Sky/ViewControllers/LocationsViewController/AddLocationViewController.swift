@@ -54,18 +54,13 @@ class AddLocationViewController: UITableViewController {
     private func processResponse(with placemarks: [CLPlacemark]?, error: Error?) {
         if let error = error {
             print("Cannot handle Geocode Address! \(error)")
-        }
-        else if let results = placemarks {
-            locations = results.compactMap {
-                result -> Location? in
+        } else if let results = placemarks {
+            locations = results.compactMap { result -> Location? in
                 guard let name = result.name else { return nil }
                 guard let location = result.location else { return nil }
                 
-                return Location(name: name,
-                                latitude: location.coordinate.latitude,
-                                longitude: location.coordinate.longitude)
+                return Location(name: name,latitude: location.coordinate.latitude,longitude: location.coordinate.longitude)
             }
-            
             tableView.reloadData()
         }
     }

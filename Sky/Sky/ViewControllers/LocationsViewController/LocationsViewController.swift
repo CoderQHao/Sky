@@ -41,8 +41,7 @@ class LocationsViewController: UITableViewController {
             if let addLocationViewController = dest as? AddLocationViewController {
                 // TODO: add delegate
                 addLocationViewController.delegate = self
-            }
-            else {
+            } else {
                 fatalError("Unexpected destination view controller.")
             }
         default:
@@ -76,7 +75,6 @@ extension LocationsViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return Section.count
     }
 
@@ -119,16 +117,14 @@ extension LocationsViewController {
         case .current:
             if let currentLocation = currentLocation {
                 vm = LocationsViewModel(location: currentLocation, locationText: nil)
-            }
-            else {
+            } else {
                 cell.label.text = "Current Location Unknown"
             }
         case .favourite:
             if favourites.count > 0 {
                 let fav = favourites[indexPath.row]
                 vm = LocationsViewModel(location: fav.location, locationText: fav.name)
-            }
-            else {
+            } else {
                 cell.label.text = "No Favourites Yet..."
             }
         }

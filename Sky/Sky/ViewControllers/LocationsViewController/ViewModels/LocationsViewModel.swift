@@ -18,8 +18,7 @@ extension LocationsViewModel: LocationRepresentable {
     var labelText: String {
         if let locationText = locationText {
             return locationText
-        }
-        else if let location = location {
+        } else if let location = location {
             return location.toString
         }
         
