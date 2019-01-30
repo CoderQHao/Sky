@@ -1,0 +1,6 @@
+framework module Pods_SkyTests {
+  umbrella header "Pods-SkyTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
