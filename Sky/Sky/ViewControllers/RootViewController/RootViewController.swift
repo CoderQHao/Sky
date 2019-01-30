@@ -199,6 +199,7 @@ extension RootViewController: SettingsViewControllerDelegate {
     }
 }
 
+// MARK: - LocationsViewControllerDelegate
 extension RootViewController: LocationsViewControllerDelegate {
     func controller(_ controller: LocationsViewController, didSelectLocation location: CLLocation) {
         currentLocation = location

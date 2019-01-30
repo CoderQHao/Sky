@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol SettingsViewControllerDelegate {
+protocol SettingsViewControllerDelegate: class {
     func controllerDidChangeTimeMode(controller: SettingsViewController)
     func controllerDidChangeTemperatureMode(controller: SettingsViewController)
 }
 
 class SettingsViewController: UITableViewController {
     /// ...
-    var delegate: SettingsViewControllerDelegate?
+    weak var delegate: SettingsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,33 +39,27 @@ extension SettingsViewController {
         }
     }
     
-    override func numberOfSections(
-        in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return Section.count
     }
     
-    override func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = Section(rawValue: section) else {
             fatalError("Unexpected section index")
         }
-        
         return section.numberOfRows
     }
     
     override func tableView( _ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 0){
+        if (section == 0) {
             return "Date format"
         }
         return "Temperature unit"
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: SettingsTableViewCell.reuseIdentifier,
-            for: indexPath) as? SettingsTableViewCell else {
-                fatalError("Unexpected talbe view cell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.reuseIdentifier, for: indexPath) as? SettingsTableViewCell else {
+            fatalError("Unexpected talbe view cell")
         }
         
         guard let section = Section(rawValue: indexPath.section) else {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+/// 日期格式
 enum DateMode: Int {
     case text
     case digit
@@ -18,6 +18,7 @@ enum DateMode: Int {
     }
 }
 
+/// 温度单位
 enum TemperatureMode: Int {
     // 摄氏度
     case celsius
@@ -33,11 +34,9 @@ struct UserDefaultsKeys {
 
 extension UserDefaults {
     
-    // Date
-    
+    // 日期
     static func dateMode() -> DateMode {
         let value = UserDefaults.standard.integer(forKey: UserDefaultsKeys.dateMode)
-        
         return DateMode(rawValue: value) ?? DateMode.text
     }
     
@@ -45,11 +44,9 @@ extension UserDefaults {
         UserDefaults.standard.set(value.rawValue, forKey: UserDefaultsKeys.dateMode)
     }
     
-    // Temperature
-    
+    // 温度
     static func temperatureMode() -> TemperatureMode {
         let value = UserDefaults.standard.integer(forKey: UserDefaultsKeys.temperatureMode)
-        
         return TemperatureMode(rawValue: value) ?? TemperatureMode.celsius
     }
     
@@ -57,8 +54,7 @@ extension UserDefaults {
         UserDefaults.standard.set(value.rawValue, forKey: UserDefaultsKeys.temperatureMode)
     }
     
-    // Locations
-    
+    // 位置
     static func saveLocations(_ locations: [Location]) {
         let dictionaries: [[String: Any]] = locations.map { $0.toDictionary }
         

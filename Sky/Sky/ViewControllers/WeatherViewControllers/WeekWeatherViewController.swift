@@ -25,10 +25,11 @@ class WeekWeatherViewController: WeatherViewController {
             updateWeatherDataContainer()
         } else {
             loadingFailedLabel.isHidden = false
-            loadingFailedLabel.text = "Load Location/Weather failed!"
+            loadingFailedLabel.text = "获取天气/位置失败了"
         }
     }
     
+    // 更新 UI
     func updateWeatherDataContainer() {
         weatherContainerView.isHidden = false
         weekWeatherTableView.reloadData()

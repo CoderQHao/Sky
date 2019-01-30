@@ -17,13 +17,7 @@ struct ForecastData: Codable {
 }
  
 extension ForecastData: Equatable {
-    static func ==(
-        lhs: ForecastData,
-        rhs: ForecastData) -> Bool {
-        return lhs.time == rhs.time &&
-            lhs.temperatureLow == rhs.temperatureLow &&
-            lhs.temperatureHigh == rhs.temperatureHigh &&
-            lhs.icon == rhs.icon &&
-            lhs.humidity == rhs.humidity
+    static func ==(lhs: ForecastData, rhs: ForecastData) -> Bool {
+        return lhs.time == rhs.time && lhs.temperatureLow == rhs.temperatureLow && lhs.temperatureHigh == rhs.temperatureHigh && lhs.icon == rhs.icon && lhs.humidity == rhs.humidity
     }
 }

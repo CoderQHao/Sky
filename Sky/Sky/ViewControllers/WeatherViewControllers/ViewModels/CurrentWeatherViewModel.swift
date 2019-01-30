@@ -62,7 +62,7 @@ struct CurrentWeatherViewModel {
         return weather.currently.summary
     }
     
-    // 时间
+    // 日期
     var date: String {
         let formatter = DateFormatter()
         formatter.dateFormat = UserDefaults.dateMode().format

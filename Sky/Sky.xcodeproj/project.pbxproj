@@ -229,7 +229,6 @@
 		0705425821B1239D009BCE5A /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				070C47B42200554900DBD134 /* CurrentWeatherUITests.swift */,
 				2CBA9BA62057D0A400A65DC6 /* Info.plist */,
 			);
 			path = SupportingFiles;
@@ -336,6 +335,7 @@
 		2CBA9BAE2057D0A400A65DC6 /* SkyUITests */ = {
 			isa = PBXGroup;
 			children = (
+				070C47B42200554900DBD134 /* CurrentWeatherUITests.swift */,
 				2CBA9BB12057D0A400A65DC6 /* Info.plist */,
 			);
 			path = SkyUITests;

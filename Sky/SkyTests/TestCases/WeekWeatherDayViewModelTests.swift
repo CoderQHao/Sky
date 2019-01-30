@@ -30,11 +30,11 @@ class WeekWeatherDayViewModelTests: XCTestCase {
     }
     
     func test_date_display() {
-        XCTAssertEqual(vm.date, "October 5")
+        XCTAssertEqual(vm.date, "十月 5")
     }
     
     func test_week_display() {
-        XCTAssertEqual(vm.week, "Thursday")
+        XCTAssertEqual(vm.week, "星期四")
     }
     
     func test_temperature_display_in_celsius() {

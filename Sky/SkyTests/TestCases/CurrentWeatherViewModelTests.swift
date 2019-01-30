@@ -47,14 +47,14 @@ class CurrentWeatherViewModelTests: XCTestCase {
         let dateMode: DateMode = .text
         UserDefaults.standard.set(dateMode.rawValue, forKey: UserDefaultsKeys.dateMode)
         
-        XCTAssertEqual(vm.date, "Thu, 05 October")
+        XCTAssertEqual(vm.date, "周四, 05 十月")
     }
     
     func test_date_display_in_digit_mode() {
         let dateMode: DateMode = .digit
         UserDefaults.standard.set(dateMode.rawValue, forKey: UserDefaultsKeys.dateMode)
         
-        XCTAssertEqual(vm.date, "T, 10/05")
+        XCTAssertEqual(vm.date, "四, 10/05")
     }
     
     func test_weather_summary() {

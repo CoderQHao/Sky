@@ -44,7 +44,7 @@ class WeekWeatherViewModelTests: XCTestCase {
     func test_view_model_for_index() {
         let viewModel = vm.viewModel(for: 0)
         
-        XCTAssertEqual(viewModel.date, "October 5")
-        XCTAssertEqual(viewModel.week, "Thursday")
+        XCTAssertEqual(viewModel.date, "十月 5")
+        XCTAssertEqual(viewModel.week, "星期四")
     }
 }
