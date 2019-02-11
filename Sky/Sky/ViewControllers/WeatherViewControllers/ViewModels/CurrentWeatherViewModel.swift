@@ -9,37 +9,8 @@
 import UIKit
 
 struct CurrentWeatherViewModel {
-    /// 位置信息是否加载完成
-    var isLocationReady = false
-    /// 天气信息是否加载完成
-    var isWeatherReady = false
     
-    /// 位置/天气信息是否加载完成
-    var isUpdateReady: Bool {
-        return isLocationReady && isWeatherReady
-    }
-    
-    var location: Location! {
-        didSet {
-            self.isLocationReady = (location != nil)
-        }
-    }
-    
-    var weather: WeatherData! {
-        didSet {
-            self.isWeatherReady = (weather != nil)
-        }
-    }
-    
-    // 位置
-    var city: String {
-        return location.name
-    }
-    
-    // 图标
-    var weatherIcon: UIImage {
-        return UIImage.weatherIcon(of: weather.currently.icon)!
-    }
+    var weather: WeatherData
     
     // 温度
     var temperature: String {
@@ -50,6 +21,11 @@ struct CurrentWeatherViewModel {
         case .celsius:
             return String(format: "%.1f °C", value.toCelsius())
         }
+    }
+    
+    // 图标
+    var weatherIcon: UIImage {
+        return UIImage.weatherIcon(of: weather.currently.icon)!
     }
     
     // 湿度
@@ -70,4 +46,9 @@ struct CurrentWeatherViewModel {
         return formatter.string(from: weather.currently.time)
     }
     
+    static let empty = CurrentWeatherViewModel(weather: WeatherData.empty)
+    
+    var isEmpty: Bool {
+        return self.weather == WeatherData.empty
+    }
 }

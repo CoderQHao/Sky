@@ -7,16 +7,43 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import CoreLocation
 
 class RootViewController: UIViewController {
     
-    var currentWeatherViewController: CurrentWeatherViewController!
-    var weekWeatherViewController: WeekWeatherViewController!
     private let segueCurrentWeather = "SegueCurrentWeather"
     private let segueWeekWeather = "SegueWeekWeather"
     private let segueSettings = "SegueSettings"
     private let segueLocations = "SegueLocations"
+    private var bag = DisposeBag()
+    
+    var currentWeatherViewController: CurrentWeatherViewController!
+    var weekWeatherViewController: WeekWeatherViewController!
+    
+    private lazy var locationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.distanceFilter = 1000
+        manager.desiredAccuracy = 1000
+        return manager
+    }()
+    
+    // 存储用户的位置
+    private var currentLocation: CLLocation? {
+        didSet {
+            // 根据用户位置设置城市名称
+            fetchCity()
+            // 获取当地的天气数据
+            fetchWeather()
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // App 进入活跃状态通知
+        setupActiveNotification()
+    }
     
     @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
     }
@@ -29,7 +56,6 @@ class RootViewController: UIViewController {
                 fatalError("目标控制器不存在")
             }
             destination.delegate = self
-            destination.viewModel = CurrentWeatherViewModel()
             currentWeatherViewController = destination
         case segueWeekWeather:
             guard let destination = segue.destination as? WeekWeatherViewController else {
@@ -62,13 +88,25 @@ class RootViewController: UIViewController {
         }
     }
     
-    // 存储用户的位置
-    private var currentLocation: CLLocation? {
-        didSet {
-            // 根据用户位置设置城市名称
-            fetchCity()
-            // 获取当地的天气数据
-            fetchWeather()
+    /// App 进入活跃状态通知
+    func setupActiveNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    // 接收到通知
+    @objc func applicationDidBecomeAction(_ notification: Notification) {
+        // 请求用户位置
+        requestLocation()
+    }
+    
+    /// 请求用户位置
+    private func requestLocation() {
+        locationManager.delegate = self
+        // 获取到了用户授权
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        } else {
+            locationManager.requestWhenInUseAuthorization()
         }
     }
     
@@ -79,17 +117,12 @@ class RootViewController: UIViewController {
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
-        WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon) { (response, error) in
-            if let error = error {
-                dump(error)
-            } else {
-                if let response = response {
-                    // 通知 currentWeatherViewController
-                    self.currentWeatherViewController.viewModel?.weather = response
-                    self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: response.daily.data)
-                }
-            }
-        }
+        WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon)
+            .subscribe(onNext: {
+                self.currentWeatherViewController.weatherVM.accept(CurrentWeatherViewModel(weather: $0))
+                self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: $0.daily.data)
+            })
+            .disposed(by: bag)
     }
     
     /// 根据用户位置设置城市名称
@@ -102,46 +135,11 @@ class RootViewController: UIViewController {
             } else {
                 if let city = placemarks?.first?.locality {
                     // 读到了位置信息 通知 currentWeatherViewController
-                    let l = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-                    self.currentWeatherViewController.viewModel?.location = l
+                    let location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                    self.currentWeatherViewController.locationVM.accept(CurrentLocationViewModel(location: location))
                 }
             }
         }
-    }
-    
-    private lazy var locationManager: CLLocationManager = {
-        let manager = CLLocationManager()
-        manager.distanceFilter = 1000
-        manager.desiredAccuracy = 1000
-        return manager
-    }()
-    
-    /// 请求用户位置
-    private func requestLocation() {
-        locationManager.delegate = self
-        // 获取到了用户授权
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            locationManager.requestLocation()
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // App 进入活跃状态通知
-        setupActiveNotification()
-    }
-    
-    // 接收到通知
-    @objc func applicationDidBecomeAction(_ notification: Notification) {
-        // 请求用户位置
-        requestLocation()
-    }
-    
-    /// App 进入活跃状态通知
-    func setupActiveNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(RootViewController.applicationDidBecomeAction(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 }
 
