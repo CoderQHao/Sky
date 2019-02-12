@@ -23,6 +23,7 @@ struct Location {
     var longitude: Double
     
     static let empty = Location(name: "", latitude: 0, longitude: 0)
+    static let invalid = Location(name: "n/a", latitude: 0, longitude: 0)
     
     var location: CLLocation {
         return CLLocation(latitude: latitude, longitude: longitude)

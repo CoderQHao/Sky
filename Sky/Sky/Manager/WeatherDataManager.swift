@@ -82,28 +82,14 @@ final class WeatherDataManager {
             let weatherData = try decoder.decode(WeatherData.self, from: $0)
             return weatherData
         }
+        .materialize()
+        .do(onNext: { print("DO: \($0)") })
+        .dematerialize()
+        .catchError { _ in
+            print("Inconsistant network condition...")
+            return Observable.just(WeatherData.invalid)
+        }
+
+        
     }
-    
-//    func didFinishGettingWeatherData(data: Data?, response: URLResponse?, error: Error?, completion: CompletionHandler) {
-//        if let _ = error {
-//            completion(nil, .failedRequest)
-//        }
-//        else if let data = data, let response = response as? HTTPURLResponse {
-//            if response.statusCode == 200 {
-//                do {
-//                    let decoder = JSONDecoder()
-//                    decoder.dateDecodingStrategy = .secondsSince1970
-//                    let weatherData = try decoder.decode(WeatherData.self, from: data)
-//                    completion(weatherData, nil)
-//                }
-//                catch {
-//                    completion(nil, .invalidResponse)
-//                }
-//            } else {
-//                completion(nil, .failedRequest)
-//            }
-//        } else {
-//            completion(nil, .unknown)
-//        }
-//    }
 }

@@ -101,37 +101,48 @@ class RootViewController: UIViewController {
     
     /// 请求用户位置
     private func requestLocation() {
-        locationManager.delegate = self
+//        locationManager.delegate = self
         // 获取到了用户授权
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            locationManager.requestLocation()
+//            locationManager.requestLocation()
+            self.locationManager.startUpdatingLocation()
+            self.locationManager.rx.didUpdateLocations.take(1).subscribe(onNext: {
+                print("update location")
+                self.currentLocation = $0.first
+            }).disposed(by:bag)
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
     }
     
     /// 获取当地的天气数据
-    private func fetchWeather() {
+    public func fetchWeather() {
         guard let currentLocation = currentLocation else { return }
         
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
-        WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon)
-            .subscribe(onNext: {
-                self.currentWeatherViewController.weatherVM.accept(CurrentWeatherViewModel(weather: $0))
-                self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: $0.daily.data)
-            })
+        let weather = WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon)
+            .share(replay: 1, scope: .whileConnected)
+        
+        weather.map { CurrentWeatherViewModel(weather: $0) }
+            .bind(to: self.currentWeatherViewController.weatherVM)
             .disposed(by: bag)
+        
+        weather.map { WeekWeatherViewModel(weatherData: $0.daily.data) }
+            .subscribe(onNext: {
+                self.weekWeatherViewController.viewModel = $0
+            }).disposed(by: bag)
     }
     
     /// 根据用户位置设置城市名称
-    private func fetchCity() {
+    public func fetchCity() {
         guard let currentLocation = currentLocation else { return }
         
         CLGeocoder().reverseGeocodeLocation(currentLocation) { (placemarks, error) in
             if let error = error {
                 dump(error)
+                self.currentWeatherViewController.locationVM.accept(.invalid)
             } else {
                 if let city = placemarks?.first?.locality {
                     // 读到了位置信息 通知 currentWeatherViewController
@@ -143,31 +154,31 @@ class RootViewController: UIViewController {
     }
 }
 
-// MARK: - CLLocationManagerDelegate
-extension RootViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // 获取到了用户位置
-        if let location = locations.first {
-            // 保存位置
-            currentLocation = location
-            manager.delegate = nil
-            // 停止更新位置
-            manager.stopUpdatingLocation()
-        }
-    }
-    
-    // 用户改变了授权
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            manager.requestLocation()
-        }
-    }
-    
-    // 定位功能发生错误
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        dump(error)
-    }
-}
+//// MARK: - CLLocationManagerDelegate
+//extension RootViewController: CLLocationManagerDelegate {
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        // 获取到了用户位置
+//        if let location = locations.first {
+//            // 保存位置
+//            currentLocation = location
+//            manager.delegate = nil
+//            // 停止更新位置
+//            manager.stopUpdatingLocation()
+//        }
+//    }
+//
+//    // 用户改变了授权
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        if status == .authorizedWhenInUse {
+//            manager.requestLocation()
+//        }
+//    }
+//
+//    // 定位功能发生错误
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        dump(error)
+//    }
+//}
 
 
 // MARK: - CurrentWeatherViewControllerDelegate
@@ -200,11 +211,11 @@ extension RootViewController: SettingsViewControllerDelegate {
 // MARK: - LocationsViewControllerDelegate
 extension RootViewController: LocationsViewControllerDelegate {
     func controller(_ controller: LocationsViewController, didSelectLocation location: CLLocation) {
+        self.currentWeatherViewController.weatherVM.accept(.empty)
+        self.currentWeatherViewController.locationVM.accept(.empty)
         currentLocation = location
     }
 }
-
-
 
 
 
