@@ -83,7 +83,7 @@ extension UserDefaults {
     static func removeLocation(_ location: Location) {
         var locations = loadLocations()
         
-        guard let index = locations.index(of: location) else {
+        guard let index = locations.firstIndex(of: location) else {
             return
         }
         

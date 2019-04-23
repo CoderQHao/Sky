@@ -6,8 +6,8 @@ target 'Sky' do
   use_frameworks!
   inhibit_all_warnings!
   # Pods for Sky
-  pod 'RxSwift'
-  pod 'RxCocoa'
+  pod 'RxSwift',:inhibit_warnings => true
+  pod 'RxCocoa',:inhibit_warnings => true
 
   target 'SkyTests' do
     inherit! :search_paths
